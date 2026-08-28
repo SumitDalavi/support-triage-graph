@@ -1,0 +1,28 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPath": "/api/v2/tickets.json"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "jsonBody": {
+      "tickets": [
+        {
+          "id": 1,
+          "subject": "Need refund for last month",
+          "description": "I was charged twice this month! Refund me immediately, I am so angry!",
+          "status": "open"
+        },
+        {
+          "id": 2,
+          "subject": "App crashes on PDF upload",
+          "description": "My app keeps crashing when I try to upload a PDF.",
+          "status": "open"
+        }
+      ]
+    }
+  }
+}

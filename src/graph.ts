@@ -16,7 +16,7 @@ const routeTicket = (state: TicketState) => {
 };
 
 // Define the graph
-export const createTriageGraph = () => {
+export const createTriageGraph = (checkpointer?: any) => {
   const graphBuilder = new StateGraph<TicketState>({ channels: ticketStateChannels })
     .addNode("classify", classifyTicket)
     .addNode("billing", billingAgent)
@@ -41,5 +41,5 @@ export const createTriageGraph = () => {
     .addEdge("general", END)
     .addEdge("escalate", END);
 
-  return graphBuilder.compile();
+  return graphBuilder.compile({ checkpointer });
 };

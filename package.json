@@ -12,8 +12,10 @@
   "dependencies": {
     "@langchain/core": "latest",
     "@langchain/langgraph": "latest",
+    "@langchain/langgraph-checkpoint-postgres": "^1.0.5",
     "@langchain/openai": "latest",
     "dotenv": "latest",
+    "pg": "^8.23.0",
     "zod": "latest"
   },
   "devDependencies": {
