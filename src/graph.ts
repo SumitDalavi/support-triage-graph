@@ -41,5 +41,8 @@ export const createTriageGraph = (checkpointer?: any) => {
     .addEdge("general", END)
     .addEdge("escalate", END);
 
-  return graphBuilder.compile({ checkpointer });
+  return graphBuilder.compile({ 
+    checkpointer,
+    interruptBefore: ["escalate"] // Human takeover logic
+  });
 };

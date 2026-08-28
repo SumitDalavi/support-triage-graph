@@ -1,0 +1,17 @@
+{
+  "request": {
+    "method": "PUT",
+    "urlPattern": "/api/v2/tickets/[0-9]+\\.json"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "jsonBody": {
+      "ticket": {
+        "status": "updated"
+      }
+    }
+  }
+}

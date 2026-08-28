@@ -53,12 +53,46 @@ async function run() {
 
     const result = await app.invoke(ticket, { configurable: { thread_id } });
 
-    console.log(`\n✅ Final State:`);
+    console.log(`\n✅ Graph paused or ended:`);
     console.log(`- Route Taken: ${result.route}`);
     console.log(`- Confidence: ${result.confidence}`);
     console.log(`- Sentiment: ${result.sentiment}`);
     console.log(`- Status: ${result.status}`);
-    console.log(`- Response: ${result.response}\n`);
+    
+    // HUMAN TAKEOVER LOGIC
+    const stateSnapshot = await app.getState({ configurable: { thread_id } });
+    if (stateSnapshot.next && stateSnapshot.next.includes("escalate")) {
+      console.log(`\n⚠️ HUMAN TAKEOVER REQUIRED for ${ticket.ticketId}`);
+      console.log(`Agent: "I'm stepping in to handle this angry or confusing ticket."`);
+      
+      // We manually update the state
+      await app.updateState({ configurable: { thread_id } }, { 
+        response: "A human agent has reviewed and resolved your issue.",
+        status: "resolved" 
+      }, "escalate");
+      
+      // Resume the graph with the human input injected
+      const finalResult = await app.invoke(null, { configurable: { thread_id } });
+      console.log(`✅ Ticket Resolved by Human:`, finalResult.response);
+      Object.assign(result, finalResult);
+    } else {
+      console.log(`- Response: ${result.response}\n`);
+    }
+
+    // REAL TICKET API SANDBOX
+    // Update the ticket in the sandbox via PUT request
+    try {
+      const ticketIdNum = ticket.ticketId.split('-')[1];
+      const zendeskPutUrl = process.env.ZENDESK_URL_PUT || `http://localhost:8080/api/v2/tickets/${ticketIdNum}.json`;
+      await fetch(zendeskPutUrl, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ticket: { status: result.status, comment: result.response } })
+      });
+      console.log(`📨 Synced resolution back to Ticket API Sandbox for ${ticket.ticketId}`);
+    } catch (err) {
+      console.warn("Failed to sync to Zendesk API Sandbox");
+    }
   }
 }
 

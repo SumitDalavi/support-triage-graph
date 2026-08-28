@@ -2,6 +2,7 @@ import { classifyTicket } from '../src/nodes/classifier';
 import { billingAgent, techAgent, humanEscalation, generalAgent } from '../src/nodes/agents';
 import { createTriageGraph } from '../src/graph';
 import { TicketState } from '../src/state';
+import { MemorySaver } from '@langchain/langgraph';
 
 // Mock ChatOpenAI
 const mockInvoke = jest.fn();
@@ -97,12 +98,12 @@ describe('Support Triage Graph Components', () => {
           content: 'Tech response'
         });
 
-      const graph = createTriageGraph();
+      const graph = createTriageGraph(new MemorySaver());
       const result = await graph.invoke({
         ticketId: '1',
         customerMessage: 'Fix this',
         status: 'open'
-      });
+      }, { configurable: { thread_id: "test-tech" } });
 
       expect(result.route).toBe('tech');
       expect(result.status).toBe('resolved');
@@ -120,12 +121,12 @@ describe('Support Triage Graph Components', () => {
           content: 'Billing response'
         });
 
-      const graph = createTriageGraph();
+      const graph = createTriageGraph(new MemorySaver());
       const result = await graph.invoke({
         ticketId: '1',
         customerMessage: 'Invoice issue',
         status: 'open'
-      });
+      }, { configurable: { thread_id: "test-billing" } });
 
       expect(result.route).toBe('billing');
       expect(result.status).toBe('resolved');
@@ -143,12 +144,12 @@ describe('Support Triage Graph Components', () => {
           content: 'General response'
         });
 
-      const graph = createTriageGraph();
+      const graph = createTriageGraph(new MemorySaver());
       const result = await graph.invoke({
         ticketId: '1',
         customerMessage: 'Hello',
         status: 'open'
-      });
+      }, { configurable: { thread_id: "test-general" } });
 
       expect(result.route).toBe('general');
       expect(result.status).toBe('resolved');
@@ -163,14 +164,15 @@ describe('Support Triage Graph Components', () => {
           sentiment: 'angry'
         });
 
-      const graph = createTriageGraph();
+      const graph = createTriageGraph(new MemorySaver());
       const result = await graph.invoke({
         ticketId: '1',
         customerMessage: 'I am angry',
         status: 'open'
-      });
+      }, { configurable: { thread_id: "test1" } });
 
-      expect(result.status).toBe('escalated');
+      const stateSnapshot = await graph.getState({ configurable: { thread_id: "test1" } });
+      expect(stateSnapshot.next).toContain('escalate');
     });
 
     it('should compile and route to escalate (low_conf)', async () => {
@@ -182,14 +184,15 @@ describe('Support Triage Graph Components', () => {
           sentiment: 'neutral'
         });
 
-      const graph = createTriageGraph();
+      const graph = createTriageGraph(new MemorySaver());
       const result = await graph.invoke({
         ticketId: '1',
         customerMessage: 'confusing',
         status: 'open'
-      });
+      }, { configurable: { thread_id: "test2" } });
 
-      expect(result.status).toBe('escalated');
+      const stateSnapshot = await graph.getState({ configurable: { thread_id: "test2" } });
+      expect(stateSnapshot.next).toContain('escalate');
     });
   });
 });
