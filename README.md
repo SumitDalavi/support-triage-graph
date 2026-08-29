@@ -1,6 +1,9 @@
+> **NOTE:** This repository is an archival lab or partial prototype. It is not actively maintained and should not be used as a reference for production-grade deployments or performance benchmarks.
+
+
 # Customer Support Triage Graph
 
-> **Maturity:** Partial Prototype
+> **Maturity:** Functional Prototype
 > _A stateful customer support ticket routing and escalation engine built with TypeScript and LangGraph.js._
 
 ## Overview
