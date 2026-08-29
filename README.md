@@ -1,6 +1,7 @@
 # Customer Support Triage Graph
 
-A stateful customer support ticket routing and escalation engine built with **TypeScript** and **LangGraph.js**.
+> **Maturity:** Partial Prototype
+> _A stateful customer support ticket routing and escalation engine built with TypeScript and LangGraph.js._
 
 ## Overview
 This system uses an LLM-based state machine to ingest customer support tickets, classify their intent (billing, tech, general), assess the user's sentiment, and route the ticket to the correct AI specialist agent.
@@ -32,7 +33,21 @@ npm run dev
 ```
 
 
----
+## Mock Boundaries (Honest Scope)
+
+| What | Status | Details |
+|---|---|---|
+| Graph Definition | **Real** | LangGraph.js nodes and conditional edges are fully implemented. |
+| LLM Sandbox | **Real/Mocked** | Can hit real OpenAI APIs or use local mocked stubs if `OPENAI_API_KEY` is omitted. |
+| Ticketing System | **Mocked** | Zendesk/ServiceNow APIs are represented by local adapter stubs. |
+
+## 📚 Documentation
+
+- [Architecture](docs/ARCHITECTURE.md) — System diagram and component details
+- [Runbook](docs/runbook.md) — Setup, commands, and expected outputs
+- [Decisions](docs/decisions.md) — ADRs for agent design choices
+- [Changelog](docs/changelog.md) — Change history
+
 
 ## 3. 🔬 Evidence & Benchmarks (Audit Added)
 
@@ -64,10 +79,3 @@ npm run test
 - **Authentication:** Currently runs in a trusted local execution environment without explicit TLS termination.
 
 ---
-
-## 5. Mock Boundaries (Audit Compliance)
-
-To comply with strict portfolio audit requirements, we explicitly define the boundaries of what is real vs. simulated:
-
-- **Fully Implemented:** The core state machine, API routes, database schemas, and integration tests are real and fully functional.
-- **Mocked / Demo Mode:** External Zendesk/ServiceNow APIs are represented by local adapter stubs.
