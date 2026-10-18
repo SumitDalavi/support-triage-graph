@@ -3,6 +3,9 @@
 
 # Customer Support Triage Graph
 
+[![Release](https://img.shields.io/github/v/release/SumitDalavi/support-triage-graph?color=blue&logo=github)](https://github.com/SumitDalavi/support-triage-graph/releases)
+[![SBOM](https://img.shields.io/badge/SBOM-SPDX%20JSON-blueviolet?logo=spdx)](https://github.com/SumitDalavi/support-triage-graph/releases)
+
 > **Maturity:** Functional Prototype
 > _A stateful customer support ticket routing and escalation engine built with TypeScript and LangGraph.js._
 
@@ -82,3 +85,24 @@ npm run test
 - **Authentication:** Currently runs in a trusted local execution environment without explicit TLS termination.
 
 ---
+
+## Release & Verification
+
+The project includes an automated DevSecOps release pipeline (`.github/workflows/release.yml`) triggered on semantic version tags (`v*.*.*`).
+
+Each release automatically:
+1. Executes test suite gates.
+2. Builds the container image.
+3. Performs vulnerability scanning via Trivy.
+4. Generates an SPDX SBOM (`sbom.spdx.json`) using Anchore Syft.
+5. Publishes a GitHub Release with attached SBOM.
+
+### Verifying the Release
+```bash
+# Verify release via GitHub CLI
+gh release view v0.1.0 --repo SumitDalavi/support-triage-graph
+
+# Download and inspect SBOM
+gh release download v0.1.0 --repo SumitDalavi/support-triage-graph --pattern "sbom.spdx.json"
+cat sbom.spdx.json | jq .
+```
