@@ -4,6 +4,10 @@
 # Customer Support Triage Graph
 
 [![Release](https://img.shields.io/github/v/release/SumitDalavi/support-triage-graph?color=blue&logo=github)](https://github.com/SumitDalavi/support-triage-graph/releases)
+[![Release Workflow](https://github.com/SumitDalavi/support-triage-graph/actions/workflows/release.yml/badge.svg)](https://github.com/SumitDalavi/support-triage-graph/actions/workflows/release.yml)
+[![SBOM](https://img.shields.io/badge/SBOM-SPDX%20JSON-blueviolet?logo=spdx)](https://github.com/SumitDalavi/support-triage-graph/releases)
+
+[![Release](https://img.shields.io/github/v/release/SumitDalavi/support-triage-graph?color=blue&logo=github)](https://github.com/SumitDalavi/support-triage-graph/releases)
 [![SBOM](https://img.shields.io/badge/SBOM-SPDX%20JSON-blueviolet?logo=spdx)](https://github.com/SumitDalavi/support-triage-graph/releases)
 
 > **Maturity:** Functional Prototype
@@ -86,7 +90,7 @@ npm run test
 
 ---
 
-## Release & Verification
+## Release & Security Verification
 
 The project includes an automated DevSecOps release pipeline (`.github/workflows/release.yml`) triggered on semantic version tags (`v*.*.*`).
 
@@ -106,3 +110,10 @@ gh release view v0.1.0 --repo SumitDalavi/support-triage-graph
 gh release download v0.1.0 --repo SumitDalavi/support-triage-graph --pattern "sbom.spdx.json"
 cat sbom.spdx.json | jq .
 ```
+
+## Documentation
+
+- [Architecture](docs/ARCHITECTURE.md)
+- [Runbook](docs/runbook.md)
+- [Decisions](docs/decisions.md)
+- [Changelog](docs/changelog.md)
