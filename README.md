@@ -1,14 +1,14 @@
 > **NOTE:** This repository is an archival lab or partial prototype. It is not actively maintained and should not be used as a reference for production-grade deployments or performance benchmarks.
 
-
 # Customer Support Triage Graph
 
-[![Release](https://img.shields.io/github/v/release/SumitDalavi/support-triage-graph?color=blue&logo=github)](https://github.com/SumitDalavi/support-triage-graph/releases)
+[![CI Pipeline](https://github.com/SumitDalavi/support-triage-graph/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/SumitDalavi/support-triage-graph/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/SumitDalavi/support-triage-graph?color=0969da&label=release&logo=github)](https://github.com/SumitDalavi/support-triage-graph/releases)
 [![Release Workflow](https://github.com/SumitDalavi/support-triage-graph/actions/workflows/release.yml/badge.svg)](https://github.com/SumitDalavi/support-triage-graph/actions/workflows/release.yml)
-[![SBOM](https://img.shields.io/badge/SBOM-SPDX%20JSON-blueviolet?logo=spdx)](https://github.com/SumitDalavi/support-triage-graph/releases)
-
-[![Release](https://img.shields.io/github/v/release/SumitDalavi/support-triage-graph?color=blue&logo=github)](https://github.com/SumitDalavi/support-triage-graph/releases)
-[![SBOM](https://img.shields.io/badge/SBOM-SPDX%20JSON-blueviolet?logo=spdx)](https://github.com/SumitDalavi/support-triage-graph/releases)
+[![GHCR Container](https://img.shields.io/badge/ghcr.io-v0.2.0-blue?logo=docker&logoColor=white)](https://github.com/SumitDalavi/support-triage-graph/pkgs/container/support-triage-graph)
+[![Node.js](https://img.shields.io/badge/Node.js-20+-339933?logo=nodedotjs&logoColor=white)](https://nodejs.org)
+[![SBOM](https://img.shields.io/badge/SBOM-SPDX%202.3-blueviolet?logo=spdx)](https://github.com/SumitDalavi/support-triage-graph/releases/tag/v0.2.0)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 > **Maturity:** Functional Prototype
 > _A stateful customer support ticket routing and escalation engine built with TypeScript and LangGraph.js._
@@ -41,7 +41,6 @@ OPENAI_API_KEY=sk-...
 ```bash
 npm run dev
 ```
-
 
 ## Mock Boundaries (Honest Scope)
 
@@ -82,7 +81,6 @@ Enterprise deployment with production-grade backends, security scans, and contai
 - [Runbook](docs/runbook.md) — Setup, commands, and expected outputs
 - [Decisions](docs/decisions.md) — ADRs for agent design choices
 - [Changelog](docs/changelog.md) — Change history
-
 
 ## 3. 🔬 Evidence & Benchmarks (Audit Added)
 
