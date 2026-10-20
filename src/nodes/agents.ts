@@ -1,10 +1,22 @@
 import { ChatOpenAI } from "@langchain/openai";
 import { TicketState } from "../state";
+import { isRealOpenAIKey } from "../shared/credential-mode";
 
 export const billingAgent = async (state: TicketState): Promise<Partial<TicketState>> => {
   console.log(`[Billing Agent] Processing ticket: ${state.ticketId}`);
+
+  if (!isRealOpenAIKey(process.env.OPENAI_API_KEY) && process.env.NODE_ENV !== 'test') {
+    return {
+      response: `[Mock Billing Agent] Acknowledged billing request for ticket ${state.ticketId}.`,
+      status: "resolved"
+    };
+  }
   
-  const llm = new ChatOpenAI({ model: "gpt-4o-mini", temperature: 0.2 });
+  const llm = new ChatOpenAI({
+    model: "gpt-4o-mini",
+    temperature: 0.2,
+    apiKey: process.env.OPENAI_API_KEY || "sk-dummy"
+  });
   
   const systemPrompt = `You handle billing tickets: refunds, invoices, plan changes. 
 You have access to get_order() and issue_refund() tools. 
@@ -23,8 +35,19 @@ Never issue a refund over $50 without noting it needs manager approval in your r
 
 export const techAgent = async (state: TicketState): Promise<Partial<TicketState>> => {
   console.log(`[Tech Agent] Processing ticket: ${state.ticketId}`);
+
+  if (!isRealOpenAIKey(process.env.OPENAI_API_KEY) && process.env.NODE_ENV !== 'test') {
+    return {
+      response: `[Mock Tech Agent] Acknowledged technical issue for ticket ${state.ticketId}.`,
+      status: "resolved"
+    };
+  }
   
-  const llm = new ChatOpenAI({ model: "gpt-4o-mini", temperature: 0.2 });
+  const llm = new ChatOpenAI({
+    model: "gpt-4o-mini",
+    temperature: 0.2,
+    apiKey: process.env.OPENAI_API_KEY || "sk-dummy"
+  });
   
   const systemPrompt = `You handle technical support tickets. 
 Walk the user through the standard troubleshooting steps for their issue type before suggesting escalation. 
@@ -55,8 +78,19 @@ Classifier Reasoning: ${state.reasoning}`;
 
 export const generalAgent = async (state: TicketState): Promise<Partial<TicketState>> => {
   console.log(`[General Agent] Processing ticket: ${state.ticketId}`);
+
+  if (!isRealOpenAIKey(process.env.OPENAI_API_KEY) && process.env.NODE_ENV !== 'test') {
+    return {
+      response: `[Mock General Agent] Acknowledged inquiry for ticket ${state.ticketId}.`,
+      status: "resolved"
+    };
+  }
   
-  const llm = new ChatOpenAI({ model: "gpt-4o-mini", temperature: 0.2 });
+  const llm = new ChatOpenAI({
+    model: "gpt-4o-mini",
+    temperature: 0.2,
+    apiKey: process.env.OPENAI_API_KEY || "sk-dummy"
+  });
   
   const systemPrompt = `You handle general inquiries. Answer the customer politely.`;
 
