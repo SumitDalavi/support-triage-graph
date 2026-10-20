@@ -1,26 +1,28 @@
 version: '3.8'
+
 services:
   app:
     build: .
     ports:
       - '8081:8080'
+    env_file:
+      - path: .env
+        required: false
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=langgraph_checkpoints
-      - POSTGRES_HOST=postgres
-      - ZENDESK_URL=http://zendesk-mock:8080/api/v2/tickets.json
-      - LANGCHAIN_TRACING_V2=true
-      - LANGCHAIN_PROJECT=support-triage-graph
+      - PORT=8080
 
+  # ── Tier 2 Companion Services (started via: docker compose --profile live up) ──
   postgres:
     image: postgres:15-alpine
+    profiles: ["live"]
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: langgraph_checkpoints
     ports:
       - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 2s
@@ -29,7 +31,11 @@ services:
 
   zendesk-mock:
     image: wiremock/wiremock:3.2.0
+    profiles: ["live"]
     ports:
       - "8080:8080"
     volumes:
       - ./wiremock:/home/wiremock
+
+volumes:
+  pgdata:
