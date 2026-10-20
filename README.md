@@ -1,5 +1,3 @@
-> **NOTE:** This repository is an archival lab or partial prototype. It is not actively maintained and should not be used as a reference for production-grade deployments or performance benchmarks.
-
 # Customer Support Triage Graph
 
 [![CI Pipeline](https://github.com/SumitDalavi/support-triage-graph/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/SumitDalavi/support-triage-graph/actions/workflows/ci.yml)
@@ -113,7 +111,7 @@ npm run test
 
 ---
 
-## Release & Security Verification
+## 🔒 Release & Security Verification
 
 The project includes an automated DevSecOps release pipeline (`.github/workflows/release.yml`) triggered on semantic version tags (`v*.*.*`).
 
@@ -127,16 +125,18 @@ Each release automatically:
 ### Verifying the Release
 ```bash
 # Verify release via GitHub CLI
-gh release view v0.1.0 --repo SumitDalavi/support-triage-graph
+gh release view v0.2.0 --repo SumitDalavi/support-triage-graph
 
 # Download and inspect SBOM
-gh release download v0.1.0 --repo SumitDalavi/support-triage-graph --pattern "sbom.spdx.json"
+gh release download v0.2.0 --repo SumitDalavi/support-triage-graph --pattern "sbom.spdx.json"
 cat sbom.spdx.json | jq .
 ```
 
-## Documentation
+## 👨‍💻 Author
 
-- [Architecture](docs/ARCHITECTURE.md)
-- [Runbook](docs/runbook.md)
-- [Decisions](docs/decisions.md)
-- [Changelog](docs/changelog.md)
+**Sumit Dalavi** — Senior DevSecOps / Platform Engineer  
+[GitHub](https://github.com/SumitDalavi) | [LinkedIn](https://in.linkedin.com/in/sumit-dalavi-762838129)
+
+---
+*Built with a focus on robust patterns, not toy demos.*
+
