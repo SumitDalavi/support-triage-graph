@@ -8,8 +8,7 @@
 [![SBOM](https://img.shields.io/badge/SBOM-SPDX%202.3-blueviolet?logo=spdx)](https://github.com/SumitDalavi/support-triage-graph/releases/tag/v0.2.0)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
-> **Maturity:** Functional Prototype
-> _A stateful customer support ticket routing and escalation engine built with TypeScript and LangGraph.js._
+> A stateful customer support ticket routing and escalation engine built with TypeScript and LangGraph.js.
 
 ## Overview
 This system uses an LLM-based state machine to ingest customer support tickets, classify their intent (billing, tech, general), assess the user's sentiment, and route the ticket to the correct AI specialist agent.
